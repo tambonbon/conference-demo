@@ -1,0 +1,9 @@
+###
+POST http://localhost:8080/api/v1/sessions
+content-type: application/json
+
+{
+  "session_name": "Dan's Great Session",
+  "session_description": "This will be one of the best conference sessions",
+  "session_length": 45
+}

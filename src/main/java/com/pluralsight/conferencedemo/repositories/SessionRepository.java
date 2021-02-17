@@ -12,6 +12,7 @@ import java.util.List;
 public class SessionRepository {
     @Autowired
     private SessionJpaRepository jpaRepository;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -38,10 +39,11 @@ public class SessionRepository {
     }
 
     public List<Session> getSessionsThatHaveName(String name) {
-        List<Session> ses = entityManager
-                .createQuery("select s from Session s where s.sessionName like :name")
-                .setParameter("name", "%" + name + "%").getResultList();
-        return ses;
+        return jpaRepository.findBySessionNameContains(name);
+//        List<Session> ses = entityManager
+//                .createQuery("select s from Session s where s.sessionName like :name")
+//                .setParameter("name", "%" + name + "%").getResultList();
+//        return ses;
     }
 }
 
