@@ -7,9 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@RepositoryRestResource(path = "conference_sessions", collectionResourceRel = "conference_sessions") // custom name to avoid ambiguous
 public interface SessionJpaRepository extends JpaRepository<Session, Long>, SessionCustomJpaRepository{
     List<Session> findBySessionNameContains(String name);
     /**
@@ -29,7 +31,7 @@ public interface SessionJpaRepository extends JpaRepository<Session, Long>, Sess
     @Query(
             "SELECT s FROM sessions s where s.sessionName like %?1"
     )
-    List<Session> getSessionWithName(String name);
+    List<Session> getSessionWithNameEnhanced(String name);
 
     // Native SQL queries
     @Query(

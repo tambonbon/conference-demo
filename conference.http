@@ -7,3 +7,32 @@ content-type: application/json
   "session_description": "This will be one of the best conference sessions",
   "session_length": 45
 }
+
+###
+POST http://localhost:8080/api/speakers
+content-type: application/json
+
+{
+  "firstName": "Dan",
+  "lastName": "Bunker",
+  "title": "Speaker",
+  "company": "Pluralsight",
+  "speakerBio": "Some Bio..."
+}
+
+###
+PATCH http://localhost:8080/api/speakers/51
+content-type: application/json
+
+{
+  "speakerBio": "Something more interesting"
+}
+
+###
+GET http://localhost:8080/api/speakers/
+content-type: application/json
+
+###
+GET http://localhost:8080/api/conference_sessions
+content-type: application/json
+

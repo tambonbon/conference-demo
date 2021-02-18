@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.List;
-
+// We want to retreive speakers from sessions in one go ---> efficient
 @Entity(name = "sessions")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Hibernate adds few stub methods to handle lazy loading and eager loading of relational data
 public class Session { // this will be one row of our data
