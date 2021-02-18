@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class TicketPriceJpaTest {
@@ -53,5 +53,16 @@ public class TicketPriceJpaTest {
         assertEquals(BigDecimal.valueOf(200, 2), otherTp.getBasePrice());
 
         repository.deleteById(otherTp.getTicketPriceId());
+    }
+    @Test
+    public void testQueryAnnotation() throws Exception {
+        List<TicketPrice> tickets = repository.getTicketsUnderPriceWithWorkShops(BigDecimal.valueOf(1000));
+        assertTrue(tickets.size() > 0);
+    }
+
+    @Test
+    public void testNamedQuery() throws Exception {
+        List<TicketPrice> tickets = repository.namedFindTicketsByPricingCategoryName("Regular");
+        assertTrue(tickets.size() > 0);
     }
 }

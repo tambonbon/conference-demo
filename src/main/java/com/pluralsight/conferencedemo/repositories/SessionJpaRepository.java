@@ -1,11 +1,16 @@
 package com.pluralsight.conferencedemo.repositories;
 
 import com.pluralsight.conferencedemo.models.Session;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface SessionJpaRepository extends JpaRepository<Session, Long> {
+public interface SessionJpaRepository extends JpaRepository<Session, Long>, SessionCustomJpaRepository{
     List<Session> findBySessionNameContains(String name);
     /**
      * Query DSL can begin with findBy, queryBy, readBy, countBy, getBy
@@ -19,6 +24,33 @@ public interface SessionJpaRepository extends JpaRepository<Session, Long> {
 
     // `Like` is like `Contains` but has a special string
     List<Session> findBySessionNameNotLike(String name);
+
+    // Enhanced JPQL syntax
+    @Query(
+            "SELECT s FROM sessions s where s.sessionName like %?1"
+    )
+    List<Session> getSessionWithName(String name);
+
+    // Native SQL queries
+    @Query(
+            value = "SELECT * FROM sessions s WHERE s.sessionName = ?0", nativeQuery = true
+    )
+    List<Session> getSessionWithNameNative(String name);
+
+    // Named Native SQL query is above TicketPrice entity
+
+    // Modifiable Queries
+    @Modifying
+    @Query(
+            "UPDATE sessions s set s.sessionName = ?1"
+    )
+    int updateSessionName(String name);
+
+    // Paging and Sorting
+    @Query(
+            "SELECT s FROM sessions s WHERE s.sessionName like %:name"
+    )
+    Page<Session> getSessionWithName(@Param("name") String name, Pageable pageable);
+
 }
 
-// Proxy finder

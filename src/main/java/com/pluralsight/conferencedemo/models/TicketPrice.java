@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "ticket_prices")
 @NamedQuery(
-        name = "TicketPrice.namedFindTicketsByPricingCategoryName",
+        name = "TicketPrice.namedFindTicketsByPricingCategoryName", // the name will be in jpa repo
         query = "select tp from TicketPrice tp where tp.pricingCategory.pricingCategoryName = :name"
 )
 @NamedNativeQuery(
